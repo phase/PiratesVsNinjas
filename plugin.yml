@@ -1,0 +1,9 @@
+name: PiratesVsNinjas
+description: The best minigame evah! ARG!
+author: Phase
+version: 1.0
+website: http://jadonfowler.xyz/
+main: xyz.jadonfowler.pvn.PVN
+commands:
+  pvn:
+    description: The main command of PVN
