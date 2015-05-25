@@ -6,6 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
@@ -34,18 +35,6 @@ public class PVNListener implements Listener {
 		if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
 			Player p = (Player) e.getEntity();
 			Player k = (Player) e.getDamager();
-			/*if ((Arena.isInGame(p) && Arena.isInGame(k)) && (Arena.getArena(p).equals(Arena.getArena(k)))) {
-				if (Arena.getArena(p).getState() == ArenaState.PRE_GAME) {
-					e.setCancelled(true);
-					return;
-				} else if (Arena.getArena(p).getTeam(p).equals(Arena.getArena(k).getTeam(k))) {
-					e.setCancelled(true);
-					return;
-				}
-				if (e.getDamage() >= p.getHealth())
-					// killed
-					Arena.getArena(k).getTeam(k).addKills(1);
-			}*/
 			if(Arena.isInGame(p) && Arena.isInGame(k)){
 				if (Arena.getArena(p).getState() == ArenaState.PRE_GAME) {
 					e.setCancelled(true);
@@ -87,5 +76,12 @@ public class PVNListener implements Listener {
 		Player p = e.getPlayer();
 		if (Arena.isInGame(p))
 			Arena.getArena(p).removePlayer(p);
+	}
+	
+	@EventHandler
+	public void hunger(FoodLevelChangeEvent e){
+		Player p = (Player) e.getEntity();
+		if (Arena.isInGame(p))
+			e.setCancelled(true);
 	}
 }

@@ -105,12 +105,14 @@ public class Arena {
 	}
 
 	private int countdown;
-
+	private final static int startTime = 10;
+	
 	public void countdown() {
-		for (countdown = 10; countdown > 0; countdown--) {
+		for (countdown = startTime; countdown > 0; countdown--) {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(PVN.getInstace(), new Runnable() {
+				final int c = countdown;
 				public void run() {
-					sendMessage(countdown + " seconds until the game starts!");
+					sendMessage(((startTime+1)-c) + " seconds until the game starts!");
 				}
 			}, countdown * 20l);
 		}
@@ -118,7 +120,7 @@ public class Arena {
 			public void run() {
 				start();
 			}
-		}, 11 * 20l);
+		}, (startTime+1) * 20l);
 	}
 
 	public void start() {
@@ -203,6 +205,8 @@ public class Arena {
 		p.getInventory().setContents(inventories.get(p.getUniqueId()));
 		p.setScoreboard(Bukkit.getScoreboardManager().getMainScoreboard());
 		MessageManager.sendMessage(p, "You have left the game!");
+		if(players.size() >= 1)
+			stop();
 	}
 
 	public String getName() {
