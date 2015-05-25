@@ -95,10 +95,11 @@ public class PVN extends JavaPlugin {
 					Arena.getArena(p).removePlayer(p);
 				} else if (args[0].equalsIgnoreCase("list")) {
 					MessageManager.sendMessage(p, "These are the available arenas:");
-					for (Arena a : Arena.getArenaList()) {
+					for (Arena a : Arena.getArenaList())
 						if (a != null)
 							p.sendMessage("  §b" + a.getName());
-					}
+					for (String s : arenas.keySet())
+						p.sendMessage("  §c" + s);
 					return true;
 				}
 				if (p.hasPermission("pvn.create")) {
@@ -192,7 +193,12 @@ public class PVN extends JavaPlugin {
 								arenas.get(args[1])[3]);
 						MessageManager.sendMessage(p, "Arena " + args[1] + " has been initialized!");
 						return true;
+					} else if (args[0].equalsIgnoreCase("stop")) {
+						// TODO Remove?
+						if (Arena.isInGame(p))
+							Arena.getArena(p).stop();
 					}
+
 				} else if (p.hasPermission("pvn.vip")) {
 					if (args[0].equalsIgnoreCase("start")) {
 						if (Arena.isInGame(p)) {
@@ -205,7 +211,7 @@ public class PVN extends JavaPlugin {
 						}
 					}
 				}
-			}else{
+			} else {
 				showHelp(p);
 				return true;
 			}
